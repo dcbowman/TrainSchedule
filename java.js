@@ -62,7 +62,7 @@ trainData.on("child_added", function(childSnapshot, prevChildKey){
 	// Prettify the train start
 	var trainStartPretty = moment.unix(trainStart).format("h:mm");
 
-	//!!!Create a variable for the current time
+	//Create a variable for the current time
 	var currentTime = moment().format('LT');
 	console.log(currentTime);
 
