@@ -68,22 +68,23 @@ trainData.on("child_added", function(childSnapshot, prevChildKey){
 
 // caclulate next arrival by adding the frequency until it is after the current time
 	
-var expected_nextTrain = moment().isSameOrAfter(currentTime);
-var returned_nextTrain = moment(trainStart).add(trainFrequency, 'minutes');  // 
-returned_nextTrain.isSame(expected_nextTrain)  // true
-
+	var expected_nextTrain = moment().isSameOrAfter(currentTime); //this is to get the time of the train that is coming either at the same time or after the current time
+	var returned_nextTrain = moment(trainStart).add(trainFrequency, 'minutes');  //this adds the train frequency
+	returned_nextTrain.isSameOrAfter(expected_nextTrain); 
+	// this takes the calculated next train time and ensures its after the expected next train
+	console.log(expected_nextTrain); //time of next train
 	
 
 	//prettify the next arrival
 	var nextArrivalPretty = moment.unix(expected_nextTrain).format("h:mm");
 
 
-	// Calculate the total billed rate
-	var minAway = expected_nextTrain - currentTime;
+	// Calculate the next train
+	var minAway = moment().subtract(nextArrivalPretty - currentTime);
 	console.log(minAway);
 
 	// Add each train's data into the table 
-	$("#trainTable > tbody").append("<tr><td>" + trainName + "</td><td>" + trainDestination + "</td><td>" + trainStartPretty + "</td><td>" + trainFrequency + "</td><td>" + nextArrivalPretty + "</td><td>" + minAway + "</td></tr>");
+	$("#trainTable > tbody").append("<tr><td>" + trainName + "</td><td>" + trainDestination + "</td><td>" + trainFrequency + "</td><td>" + nextArrivalPretty + "</td><td>" + minAway + "</td></tr>");
 
 });
 
