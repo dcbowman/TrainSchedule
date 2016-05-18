@@ -1,6 +1,6 @@
 
 // 1. Link to Firebase
-var trainData = new Firebase("https://sweltering-inferno-8052.firebaseio.com/");
+var trainData = new Firebase("https://train-homework.firebaseio.com/");
 
 // 2. Button for adding train info
 $("#addTrainBtn").on("click", function(){
@@ -8,7 +8,7 @@ $("#addTrainBtn").on("click", function(){
 	// Grabs user input
 	var trainName = $("#trainNameInput").val().trim();
 	var trainDestination = $("#destinationInput").val().trim();
-	var trainStart = moment($("#startInput").val().trim(), "HH:MM").format("X");//need to check format X 
+	var trainStart = $("#startInput").val().trim();//need to check format 
 	var trainFrequency = $("#frequencyInput").val().trim();
 
 	// Creates local "temporary" object for holding train info
@@ -60,23 +60,30 @@ trainData.on("child_added", function(childSnapshot, prevChildKey){
 	console.log(trainFrequency);
 
 	// Prettify the train start
-	var trainStartPretty = moment.unix(trainStart).format("HH:MM");
-
-	//!!!!!! Calculate the time the next train is coming 
-
-	// To calculate the next train coming 
-	var nextArrival = moment().diff(moment.unix(empStart, 'X'), "months");
-	console.log(nextArrival);
+	var trainStartPretty = moment.unix(trainStart).format("h:mm");
 
 	//!!!Create a variable for the current time
-	var currentTime =
+	var currentTime = moment().format('LT');
+	console.log(currentTime);
+
+// caclulate next arrival by adding the frequency until it is after the current time
+	
+var expected_nextTrain = moment().isSameOrAfter(currentTime);
+var returned_nextTrain = moment(trainStart).add(trainFrequency, 'minutes');  // 
+returned_nextTrain.isSame(expected_nextTrain)  // true
+
+	
+
+	//prettify the next arrival
+	var nextArrivalPretty = moment.unix(expected_nextTrain).format("h:mm");
+
 
 	// Calculate the total billed rate
-	var minAway = nextArrival - currentTime;
+	var minAway = expected_nextTrain - currentTime;
 	console.log(minAway);
 
 	// Add each train's data into the table 
-	$("#trainTable > tbody").append("<tr><td>" + trainName + "</td><td>" + trainDestination + "</td><td>" + trainStartPretty + "</td><td>" + trainFrequency + "</td><td>" + nextArrival + "</td><td>" + minAway + "</td></tr>");
+	$("#trainTable > tbody").append("<tr><td>" + trainName + "</td><td>" + trainDestination + "</td><td>" + trainStartPretty + "</td><td>" + trainFrequency + "</td><td>" + nextArrivalPretty + "</td><td>" + minAway + "</td></tr>");
 
 });
 
