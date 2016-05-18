@@ -66,11 +66,22 @@ trainData.on("child_added", function(childSnapshot, prevChildKey){
 	var currentTime = moment().format('LT');
 	console.log(currentTime);
 
+// Calculate the next train
+	var minAway = moment().subtract(nextArrivalPretty - currentTime);
+	console.log(minAway);
+
 // caclulate next arrival by adding the frequency until it is after the current time
 	
 	var expected_nextTrain = moment().isSameOrAfter(currentTime); //this is to get the time of the train that is coming either at the same time or after the current time
-	var returned_nextTrain = moment(trainStart).add(trainFrequency, 'minutes');  //this adds the train frequency
+	var returned_nextTrain = moment(trainStart++).add(trainFrequency, 'minutes');  //this adds the train frequency
 	returned_nextTrain.isSameOrAfter(expected_nextTrain); 
+//var expected_nextTrain = 00:00;
+//while(expected_nextTrain >= currentTime){
+	//trainFrequency++
+//}
+//return expected_nextTrain
+//}
+
 	// this takes the calculated next train time and ensures its after the expected next train
 	console.log(expected_nextTrain); //time of next train
 	
@@ -79,9 +90,7 @@ trainData.on("child_added", function(childSnapshot, prevChildKey){
 	var nextArrivalPretty = moment.unix(expected_nextTrain).format("h:mm");
 
 
-	// Calculate the next train
-	var minAway = moment().subtract(nextArrivalPretty - currentTime);
-	console.log(minAway);
+	
 
 	// Add each train's data into the table 
 	$("#trainTable > tbody").append("<tr><td>" + trainName + "</td><td>" + trainDestination + "</td><td>" + trainFrequency + "</td><td>" + nextArrivalPretty + "</td><td>" + minAway + "</td></tr>");
