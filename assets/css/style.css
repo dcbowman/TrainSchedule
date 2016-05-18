@@ -2,7 +2,9 @@ body{
 	font-family: 'Yanone Kaffeesatz', sans-serif;
 	background-image:url("../images/hogwarts.jpg");
 }
-
+page-header{
+	background-image:url("../images/platform.jpg");
+}
 h3{
 	font-family: 'Yanone Kaffeesatz', sans-serif;
 }
