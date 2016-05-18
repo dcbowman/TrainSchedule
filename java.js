@@ -73,7 +73,7 @@ trainData.on("child_added", function(childSnapshot, prevChildKey){
 // caclulate next arrival by adding the frequency until it is after the current time
 	
 	var expected_nextTrain = moment().isSameOrAfter(currentTime); //this is to get the time of the train that is coming either at the same time or after the current time
-	var returned_nextTrain = moment(trainStart++).add(trainFrequency, 'minutes');  //this adds the train frequency
+	var returned_nextTrain = moment(trainStart).add(trainFrequency, 'minutes');  //this adds the train frequency
 	returned_nextTrain.isSameOrAfter(expected_nextTrain); 
 //var expected_nextTrain = 00:00;
 //while(expected_nextTrain >= currentTime){
