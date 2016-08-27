@@ -67,8 +67,7 @@ trainData.on("child_added", function(childSnapshot, prevChildKey){
 	console.log(currentTime);
 
 // Calculate the next train
-	var minAway = moment().subtract(nextArrivalPretty - currentTime);
-	console.log(minAway);
+	//var minutes till next = trainFrequency  - ((currentTime - trainStart) % trainFrequency)
 
 // caclulate next arrival by adding the frequency until it is after the current time
 	
